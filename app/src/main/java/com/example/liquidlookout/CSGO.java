@@ -1,7 +1,17 @@
 package com.example.liquidlookout;
 
+import java.util.ArrayList;
+
 public class CSGO {
-    public void speak() {
-        System.err.println("TESTTESTETTEST!");
+
+    private ArrayList<Match> upcoming;
+
+    public CSGO() {
+
     }
+
+    public ArrayList<Match> getUpcomingMatches() {
+        return null;
+    }
+
 }
