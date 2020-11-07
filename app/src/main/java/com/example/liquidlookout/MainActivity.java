@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         JSONParser parser = new JSONParser("https://api.pandascore.co/teams/liquid-cs-go/tournaments?token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ");
         Thread t = new Thread(parser);
         t.start();
+        DataLoader.loadData(Thread.currentThread());
     }
 
     public void ChangeScreen(View v) {
