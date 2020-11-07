@@ -46,13 +46,15 @@ public class Team {
     }
 
     private void fetchLogo() {
-        try {
-            URL imgUrl = new URL(logoUrl);
-            logo = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!logoUrl.equals("null")) {
+            try {
+                URL imgUrl = new URL(logoUrl);
+                logo = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
