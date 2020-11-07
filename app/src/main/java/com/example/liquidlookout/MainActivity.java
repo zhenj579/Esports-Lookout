@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 //        t.start();
         long start = System.currentTimeMillis();
         DataLoader.loadData(Thread.currentThread());
-        printData();
+        //printData();
         Log.e("Elapsed Time", ((System.currentTimeMillis() - start) / 1000.0) + " seconds");
     }
 
