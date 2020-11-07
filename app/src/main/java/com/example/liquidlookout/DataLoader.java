@@ -1,5 +1,9 @@
 package com.example.liquidlookout;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,12 +12,16 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.ZonedDateTime;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class DataLoader{
 
+    public static final ZonedDateTime today = ZonedDateTime.now();
     public static final String api = "https://api.pandascore.co/";
-    public static final String lolUrl = api + "lol/";
-    public static final String csUrl = api + "csgo/";
+    public static final String lolUrl = api + "lol/matches/upcoming?";
+    public static final String csUrl = api + "csgo/matches/upcoming?";
+    public static final String searchRange = "range[begin_at]="+today.getYear() + "-" + today.getMonth().getValue() + "-" + (today.getDayOfMonth() < 10 ? "0"+ today.getDayOfMonth() : today.getDayOfMonth()) +",3000-12-26&";
     public static final String token = "token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ";
 
     private static DataLoader dt = null;
