@@ -41,6 +41,7 @@
         android:id="@+id/gamesButton"
         android:layout_width="160dp"
         android:layout_height="69dp"
+        android:onClick="ChangeScreen"
         android:text="@string/games"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
