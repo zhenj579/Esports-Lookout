@@ -46,7 +46,7 @@ public class Team {
     }
 
     private void fetchLogo() {
-        if(!logoUrl.equals("null")) {
+        if(logoUrl.charAt(0) != 'n') {
             try {
                 URL imgUrl = new URL(logoUrl);
                 logo = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
