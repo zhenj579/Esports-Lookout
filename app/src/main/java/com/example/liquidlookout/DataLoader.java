@@ -4,6 +4,10 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -134,5 +139,45 @@ public class DataLoader{
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static ArrayList<Match> fetchUpcomingMatches(String ulr) {
+        ArrayList<Match> upcoming = new ArrayList<>();
+        String test = DataLoader.getWebPageAsString(DataLoader.csUrl + DataLoader.token);
+        try {
+            JSONArray jsonArr = new JSONArray(test);
+            for(int i = 0; i < jsonArr.length(); i++) {
+                JSONObject obj = jsonArr.getJSONObject(i);
+                addMatch(upcoming, obj);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return upcoming;
+    }
+
+    private static void addMatch(ArrayList<Match> upcoming, JSONObject matchJson) throws JSONException {
+        Match match = new Match();
+        match.setMatchName(matchJson.getString("name"));
+        if(DataLoader.checkForTBD(match.getMatchName()))
+            return;
+        match.setBegin(ZonedDateTime.parse(matchJson.getString("begin_at")));
+        JSONArray opponents = matchJson.getJSONArray("opponents");
+        for(int i = 0; i < opponents.length(); i++) {
+            JSONObject teamJson = opponents.getJSONObject(i).getJSONObject("opponent");
+            Team team = new Team();
+            team.setName(teamJson.getString("name"));
+            team.setSlug(teamJson.getString("slug"));
+            team.setLogoUrl(teamJson.getString("image_url"));
+            match.getTeams().add(team);
+        }
+        upcoming.add(match);
+    }
+
+    public static boolean checkForTBD(String name) {
+        int l = name.length();
+        if(name.charAt(l-3) == 'T' && name.charAt(l-2) == 'B' && name.charAt(l-1) == 'D')
+            return true;
+        return false;
     }
 }
