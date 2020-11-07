@@ -7,12 +7,58 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/textView"
+        android:layout_width="267dp"
+        android:layout_height="127dp"
+        android:clickable="false"
+        android:lineSpacingExtra="12sp"
+        android:shadowColor="#020101"
+        android:text="@string/app_name"
+        android:textColor="#518DBD"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.074" />
+
+    <ImageView
+        android:id="@+id/liquidLogo"
+        android:layout_width="171dp"
+        android:layout_height="194dp"
+        android:contentDescription="@string/homeLiquidLogo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97"
+        app:srcCompat="@drawable/teamliquid" />
+
+
+    <Button
+        android:id="@+id/gamesButton"
+        android:layout_width="160dp"
+        android:layout_height="69dp"
+        android:text="@string/games"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367" />
+
+    <Button
+        android:id="@+id/subscribedButton"
+        android:layout_width="161dp"
+        android:layout_height="70dp"
+        android:text="@string/subscribedGames"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.541" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
