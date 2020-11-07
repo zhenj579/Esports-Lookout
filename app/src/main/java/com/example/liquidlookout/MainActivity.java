@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button DiffGamesButton;
+    Button DiffGamesButton,subscribedMathcesButton;
 
     @Override
 
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DiffGamesButton = findViewById(R.id.gamesButton);
+        subscribedMathcesButton = findViewById(R.id.subscribedButton);
         JSONParser parser = new JSONParser("https://api.pandascore.co/teams/liquid-cs-go/tournaments?token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ");
         Thread t = new Thread(parser);
         t.start();
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         if (v == DiffGamesButton) {
             Intent DiffGamesIntent = new Intent(this, DifferentGamesActivity.class);
             startActivity(DiffGamesIntent);
+        }else if(v==subscribedMathcesButton){
+            Intent SubscribedIntent = new Intent(this, SubscribedMatchesActivity.class);
+            startActivity(SubscribedIntent);
         }
     }
 

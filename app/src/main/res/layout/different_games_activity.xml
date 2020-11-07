@@ -8,9 +8,9 @@
 
     <Button
         android:id="@+id/DiffGamesHomeButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gamesList"
+        android:layout_below="@id/dgamestittle"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="0dp"
         android:layout_weight="2"
@@ -26,9 +26,9 @@
     <ListView
         android:id="@+id/gamesList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight=".5"
-        android:layout_below="@id/dgamestittle" />
+        android:layout_height="657dp"
+        android:layout_below="@id/DiffGamesHomeButton"
+        android:layout_weight="2" />
 
     <TextView
         android:id="@+id/dgamestittle"
@@ -38,6 +38,8 @@
         android:text="chose your game"
         android:textAlignment="center"
 
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -45,13 +47,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
-    <Button
-        android:id="@+id/testOfAddToList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gamesList"
-        android:layout_toLeftOf="@id/DiffGamesHomeButton"
-        android:layout_weight="2"
-        android:onClick="onClicks"
-        android:text="Button" />
 </RelativeLayout>
