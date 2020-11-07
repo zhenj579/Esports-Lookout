@@ -20,17 +20,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button DiffGamesButton;
+    Button subMatchesButton;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DiffGamesButton = findViewById(R.id.gamesButton);
+        subMatchesButton = findViewById(R.id.subscribedButton);
     }
     public void ChangeScreen(View v){
         if(v == DiffGamesButton){
             Intent DiffGamesIntent = new Intent(this, DifferentGamesActivity.class);
             startActivity(DiffGamesIntent);
+        }
+        else if(v == subMatchesButton)
+        {
+            Intent subMatchesIntent = new Intent(this, SubscribedMatchesActivity.class);
+            startActivity(subMatchesIntent);
         }
     }
     private List<String> getJSONStrings(final List<String> urls)

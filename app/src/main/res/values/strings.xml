@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Liquid Lookout</string>
     <string name="games">Games</string>
-    <string name="subscribedGames">Subscribed Games</string>
+    <string name="subscribedMatches">Subscribed Matches</string>
     <string name="homeLiquidLogo">team liquid logo for home screen</string>
+    <string name="homeButton">Home</string>
 </resources>
