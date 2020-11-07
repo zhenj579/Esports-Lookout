@@ -1,12 +1,20 @@
 package com.example.liquidlookout;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Team {
 
     private String name;
+    private String slug;
     private int numOfPlayers;
     private String logoUrl;
+    private Bitmap logo;
     private ArrayList<Player> players;
 
     public Team() {
@@ -18,6 +26,31 @@ public class Team {
         this.numOfPlayers = numOfPlayers;
         this.logoUrl = logoUrl;
         this.players = players;
+
+        fetchLogo();
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public Bitmap getLogo() {
+        return logo;
+    }
+
+    private void fetchLogo() {
+        try {
+            URL imgUrl = new URL(logoUrl);
+            logo = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName() {
