@@ -13,6 +13,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.ZonedDateTime;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DataLoader{
@@ -34,13 +38,31 @@ public class DataLoader{
     private CSGO csgo;
     private JSONParser parser;
 
+    private static ExecutorService es = Executors.newFixedThreadPool(2);
+
     private DataLoader(final Thread caller) {
         if(loader == null) {
             loader = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    lol = new LOL();
-                    csgo = new CSGO();
+                    es.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            lol = new LOL();
+                        }
+                    });
+                    es.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            csgo = new CSGO();
+                            es.shutdown();
+                        }
+                    });
+                    try {
+                        es.awaitTermination(20, TimeUnit.SECONDS);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     synchronized (caller) {
                         caller.notify();
                     }
