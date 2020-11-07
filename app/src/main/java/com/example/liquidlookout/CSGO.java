@@ -34,8 +34,10 @@ public class CSGO {
 
     private void addMatch(JSONObject matchJson) throws JSONException {
         Match match = new Match();
-        match.setBegin(ZonedDateTime.parse(matchJson.getString("begin_at")));
         match.setMatchName(matchJson.getString("name"));
+        if(match.getMatchName().contains("TBD vs TBD"))
+            return;
+        match.setBegin(ZonedDateTime.parse(matchJson.getString("begin_at")));
         JSONArray opponents = matchJson.getJSONArray("opponents");
         for(int i = 0; i < opponents.length(); i++) {
             JSONObject teamJson = opponents.getJSONObject(i).getJSONObject("opponent");
