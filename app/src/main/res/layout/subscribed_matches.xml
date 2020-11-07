@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,24 +9,19 @@
         android:id="@+id/subscribedHomeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/horizontalScrollView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="495dp"
+        android:layout_marginEnd="259dp"
         android:onClick="goHome"
-        android:text="@string/homeButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.994" />
+        android:text="@string/homeButton" />
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="404dp"
-        android:layout_height="91dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01">
+        android:layout_height="91dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,13 +31,29 @@
                 android:id="@+id/lolView"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
                 app:srcCompat="@drawable/leaguelogo" />
 
             <ImageView
                 android:id="@+id/csgoView"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
                 app:srcCompat="@drawable/csgologo" />
+
         </LinearLayout>
     </HorizontalScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/subListView"
+        android:layout_width="match_parent"
+        android:layout_height="493dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="94dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

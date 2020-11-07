@@ -1,8 +1,10 @@
 package com.example.liquidlookout;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.JsonReader;
@@ -20,15 +22,18 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button DiffGamesButton;
+    Button subMatchButton;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DiffGamesButton = findViewById(R.id.gamesButton);
+        subMatchButton = findViewById(R.id.subscribedButton);
         //https://api.pandascore.co/lol/matches/upcoming?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ
-        JSONParser parser = new JSONParser("https://api.pandascore.co/lol/matches/upcoming?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ");
+        JSONParser parser = new JSONParser(DataLoader.lolUrl+DataLoader.searchRange+DataLoader.token);
         //https://api.pandascore.co/csgo/matches?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ
         Thread t = new Thread(parser);
         t.start();
@@ -40,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
             Intent DiffGamesIntent = new Intent(this, DifferentGamesActivity.class);
             startActivity(DiffGamesIntent);
         }
+        if (v == subMatchButton)
+        {
+            Intent subMatchesIntent = new Intent(this, SubscribedMatchesActivity.class);
+            startActivity(subMatchesIntent);
+        }
+
     }
 
     //test commit Richard
