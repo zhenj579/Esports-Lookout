@@ -2,6 +2,10 @@ package com.example.liquidlookout;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -11,18 +15,41 @@ public class CSGO {
     private ArrayList<Match> upcoming;
 
     public CSGO() {
+        upcoming = new ArrayList<>();
         fetchUpcomingMatches();
     }
 
     private void fetchUpcomingMatches() {
-        ZonedDateTime now = ZonedDateTime.now();
-        now = now.withZoneSameLocal(ZoneId.of("Z"));
-        String test = DataLoader.getWebPageAsString(DataLoader.lolUrl+ "matches?range[begin_at]=" + now.toString() + ","  + now.plusYears(1000) + "&" + DataLoader.token);
-        Log.e("test", test);
+        String test = DataLoader.getWebPageAsString(DataLoader.csUrl + DataLoader.token);
+        try {
+            JSONArray jsonArr = new JSONArray(test);
+            for(int i = 0; i < jsonArr.length(); i++) {
+                JSONObject obj = jsonArr.getJSONObject(i);
+                addMatch(obj);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addMatch(JSONObject matchJson) throws JSONException {
+        Match match = new Match();
+        match.setBegin(ZonedDateTime.parse(matchJson.getString("begin_at")));
+        match.setMatchName(matchJson.getString("name"));
+        JSONArray opponents = matchJson.getJSONArray("opponents");
+        for(int i = 0; i < opponents.length(); i++) {
+            JSONObject teamJson = opponents.getJSONObject(i).getJSONObject("opponent");
+            Team team = new Team();
+            team.setName(teamJson.getString("name"));
+            team.setSlug(teamJson.getString("slug"));
+            team.setLogoUrl(teamJson.getString("image_url"));
+            match.getTeams().add(team);
+        }
+        upcoming.add(match);
     }
 
     public ArrayList<Match> getUpcomingMatches() {
-        return null;
+        return upcoming;
     }
 
 }

@@ -2,6 +2,9 @@ package com.example.liquidlookout;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -76,6 +79,7 @@ public class Team {
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
+        fetchLogo();
     }
 
     public void setPlayers(ArrayList<Player> players) {
@@ -84,5 +88,13 @@ public class Team {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result += "\tTeam Name: " + name + "\n";
+        result += "\tSlug: " + name + "\n";
+        return result;
     }
 }
