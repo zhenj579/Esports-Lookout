@@ -11,11 +11,12 @@ import java.net.URL;
 
 public class DataLoader{
 
+    public static final String token = "l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ";
+
     private static DataLoader dt = null;
+    private static Thread loader = null;
 
     private static boolean loaded = false;
-
-    private static Thread loader = null;
 
     private LOL lol;
     private CSGO csgo;
