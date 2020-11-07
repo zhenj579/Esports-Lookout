@@ -18,24 +18,32 @@ public class DataLoader{
 
     private static boolean loaded = false;
 
+    private static Thread loader = null;
+
     private LOL lol;
     private CSGO csgo;
 
     private DataLoader(final Thread caller) {
-        Thread loader = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                lol = new LOL();
-                csgo = new CSGO();
-                synchronized (caller)  {
-                    caller.notify();
+        if(loader == null) {
+            loader = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    lol = new LOL();
+                    csgo = new CSGO();
+                    synchronized (caller) {
+                        caller.notify();
+                    }
                 }
-            }
-        });
+            });
+        }
         loader.start();
     }
 
-    public static void loadData(Thread caller) {
+    public static synchronized void reloadData(Thread caller) {
+        dt = new DataLoader(caller);
+    }
+
+    public static synchronized void loadData(Thread caller) {
         if(dt == null) {
             synchronized (caller) {
                 try {
