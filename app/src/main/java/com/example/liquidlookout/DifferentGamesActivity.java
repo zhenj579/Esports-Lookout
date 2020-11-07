@@ -21,7 +21,6 @@ public class DifferentGamesActivity extends AppCompatActivity implements Adapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.different_games_activity);
         DiffGamesHomeButton = findViewById(R.id.DiffGamesHomeButton);
-        TestAdd = findViewById(R.id.testOfAddToList);
         listOfGames = findViewById(R.id.gamesList);
 
         ArrayAdapter<String> gamesAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,testArray);

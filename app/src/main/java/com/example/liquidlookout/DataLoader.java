@@ -11,7 +11,10 @@ import java.net.URL;
 
 public class DataLoader{
 
-    public static final String token = "l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ";
+    public static final String api = "https://api.pandascore.co/";
+    public static final String lolUrl = api + "lol/";
+    public static final String csUrl = api + "csgo/";
+    public static final String token = "token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ";
 
     private static DataLoader dt = null;
     private static Thread loader = null;
