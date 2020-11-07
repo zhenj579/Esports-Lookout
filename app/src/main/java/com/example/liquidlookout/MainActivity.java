@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DiffGamesButton = findViewById(R.id.gamesButton);
-        JSONParser parser = new JSONParser("https://api.pandascore.co/teams/liquid-cs-go/tournaments?token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ");
+        //https://api.pandascore.co/lol/matches/upcoming?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ
+        JSONParser parser = new JSONParser("https://api.pandascore.co/lol/matches/upcoming?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ");
+        //https://api.pandascore.co/csgo/matches?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ
         Thread t = new Thread(parser);
         t.start();
         DataLoader.loadData(Thread.currentThread());

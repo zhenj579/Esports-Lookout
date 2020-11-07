@@ -1,6 +1,11 @@
 package com.example.liquidlookout;
 
+import android.os.Build;
 import android.util.JsonReader;
+import android.util.JsonToken;
+import android.util.Pair;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -10,6 +15,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +29,7 @@ public class JSONParser implements Runnable{
         this.url = url;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
         try
@@ -32,7 +39,7 @@ public class JSONParser implements Runnable{
             try {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 reader = getJSONReader(in);
-                List<String> info = getContentArray();
+                List<Pair<ZonedDateTime,List<String>>> info = getContentArray();
                 displayContent(info);
             } finally {
                 urlConnection.disconnect();
@@ -43,9 +50,10 @@ public class JSONParser implements Runnable{
             e.printStackTrace();
         }
     }
-    private List<String> getContentArray() throws IOException
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private List<Pair<ZonedDateTime, List<String>>> getContentArray() throws IOException
     {
-        List<String> contents = new ArrayList<>();
+        List<Pair<ZonedDateTime, List<String>>> contents = new ArrayList<>();
         reader.beginArray();
         while(reader.hasNext())
         {
@@ -55,29 +63,57 @@ public class JSONParser implements Runnable{
         return contents;
     }
 
-//    private List<String> readMatches() throws IOException {
-//        List<String> matches = new ArrayList<>();
-//        reader.beginArray();
-//        while(reader.hasNext())
-//        {
-//        }
-//        reader.endArray();
-//        return matches;
-//    }
-    private String readObject() throws IOException
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private Pair<ZonedDateTime, List<String>> readObject() throws IOException
     {
         String begin = "";
-        String slugOfMatch = "";
+        List<String> opponents = new ArrayList<>();
         reader.beginObject();
         while(reader.hasNext())
         {
             String name = reader.nextName();
-            if(name.equals("begin_at")) begin = reader.nextString();
-            else if(name.equals("slug")) slugOfMatch = reader.nextString();
+            if(name.equals("opponents") && reader.peek() != JsonToken.NULL) opponents = readOpponentArray();
+            else if(name.equals("begin_at")) begin = reader.nextString();
             else reader.skipValue();
         }
         reader.endObject();
-        return slugOfMatch + " " + formatDateAndTime(begin);
+        if(opponents.isEmpty()) return null;
+        return new Pair<ZonedDateTime, List<String>>(ZonedDateTime.parse(begin), opponents);
+    }
+    private List<String> readOpponentArray() throws IOException
+    {
+        List<String> opponents = new ArrayList<>();
+        reader.beginArray();
+        while(reader.hasNext())
+        {
+            opponents.add(readOpponent());
+        }
+        reader.endArray();
+        return opponents;
+    }
+
+    private String readOpponent() throws IOException
+    {
+        String opponent = "";
+        reader.beginObject();
+        while(reader.hasNext())
+        {
+            String name = reader.nextName();
+            if(name.equals("opponent"))
+            {
+                reader.beginObject();
+                while(reader.hasNext())
+                {
+                    String nestedName = reader.nextName();
+                    if(nestedName.equals("slug")) opponent = reader.nextString();
+                    else reader.skipValue();
+                }
+                reader.endObject();
+            }
+            else reader.skipValue();
+        }
+        reader.endObject();
+        return opponent;
     }
     private JsonReader getJSONReader(InputStream stream)
     {
@@ -85,14 +121,24 @@ public class JSONParser implements Runnable{
         JsonReader jsonReader = new JsonReader(reader);
         return jsonReader;
     }
-    public void displayContent(List<String> text)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void displayContent(List<Pair<ZonedDateTime, List<String>>> text)
     {
-        for(String content : text) System.out.println(content);
+        for(Pair<ZonedDateTime, List<String>> p : text)
+        {
+            if(p != null)
+            {
+                if(p.second.size() > 1) System.out.println(formatDateAndTime(p.first) + " " + p.second.get(0) + " vs " + p.second.get(1));
+            }
+        }
     }
-    private String formatDateAndTime(String dateAndTime)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String formatDateAndTime(ZonedDateTime formatted)
     {
-        String date = dateAndTime.substring(0, 10);
-        String time = dateAndTime.substring(11, dateAndTime.length()-1);
-        return date + " " + time + " UTC";
+        int minutes = formatted.getMinute();
+        String stringminutes = Integer.toString(minutes);
+        if(minutes == 0) stringminutes+="0";
+        return formatted.getMonth() + " " + formatted.getDayOfMonth() + " " + formatted.getYear() + " " + formatted.getHour() + ":" + stringminutes + " UTC";
     }
+
 }
