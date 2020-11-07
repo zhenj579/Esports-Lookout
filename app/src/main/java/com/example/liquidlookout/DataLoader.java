@@ -21,6 +21,7 @@ public class DataLoader{
     public static final String api = "https://api.pandascore.co/";
     public static final String lolUrl = api + "lol/matches/upcoming?";
     public static final String csUrl = api + "csgo/matches/upcoming?";
+    public static final String team = api + "teams/";
     public static final String searchRange = "range[begin_at]="+today.getYear() + "-" + today.getMonth().getValue() + "-" + (today.getDayOfMonth() < 10 ? "0"+ today.getDayOfMonth() : today.getDayOfMonth()) +",3000-12-26&";
     public static final String token = "token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ";
 
@@ -31,6 +32,7 @@ public class DataLoader{
 
     private LOL lol;
     private CSGO csgo;
+    private JSONParser parser;
 
     private DataLoader(final Thread caller) {
         if(loader == null) {
