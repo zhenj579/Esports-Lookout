@@ -27,7 +27,6 @@ public class DataLoader{
             public void run() {
                 lol = new LOL();
                 csgo = new CSGO();
-                //.out.println(getWebPageAsString("https://api.pandascore.co/teams/liquid-cs-go/tournaments?range[begin_at]=2020-11-06T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ"));
                 synchronized (caller)  {
                     caller.notify();
                 }
