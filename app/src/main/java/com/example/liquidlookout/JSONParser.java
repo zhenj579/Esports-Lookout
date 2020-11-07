@@ -17,7 +17,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JSONParser implements Runnable{
 
@@ -39,8 +41,11 @@ public class JSONParser implements Runnable{
             try {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 reader = getJSONReader(in);
-                List<Pair<ZonedDateTime,List<String>>> info = getContentArray();
-                displayContent(info);
+                List<Pair<ZonedDateTime,List<String>>> upcomingMatches = getMatchContentArray();
+                List<String> slugs = getSlugs(upcomingMatches);
+                List<Pair<String,String>> acronymsAndLogoUrls = getAcronymsAndLogoUrls(slugs);
+                Map<String, Pair<String,String>> upcomingMatchesTeamInfo = getTeamInfo(acronymsAndLogoUrls,slugs);
+                displayTeamContent(upcomingMatchesTeamInfo);
             } finally {
                 urlConnection.disconnect();
             }
@@ -50,21 +55,45 @@ public class JSONParser implements Runnable{
             e.printStackTrace();
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private List<Pair<ZonedDateTime, List<String>>> getContentArray() throws IOException
+    private List<Pair<String,String>> getAcronymsAndLogoUrls(List<String> slugs) throws IOException {
+        List<Pair<String,String>> acronymsAndLogoUrls = new ArrayList<>();
+        for(String slug : slugs)
+        {
+            acronymsAndLogoUrls.add(readJson(getTeamURL(slug)));
+        }
+        return acronymsAndLogoUrls;
+    }
+
+    private List<String> getSlugs(List<Pair<ZonedDateTime, List<String>>> matches)
+    {
+        List<String> slugs = new ArrayList<>();
+        for(Pair<ZonedDateTime,List<String>> p : matches)
+        {
+            if(p != null && p.second.size() > 1)
+            {
+                slugs.add(p.second.get(0));
+                slugs.add(p.second.get(1));
+            }
+        }
+        return slugs;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private List<Pair<ZonedDateTime, List<String>>> getMatchContentArray() throws IOException
     {
         List<Pair<ZonedDateTime, List<String>>> contents = new ArrayList<>();
         reader.beginArray();
         while(reader.hasNext())
         {
-            contents.add(readObject());
+            contents.add(readMatchObject());
         }
         reader.endArray();
         return contents;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private Pair<ZonedDateTime, List<String>> readObject() throws IOException
+    private Pair<ZonedDateTime, List<String>> readMatchObject() throws IOException
     {
         String begin = "";
         List<String> opponents = new ArrayList<>();
@@ -92,6 +121,51 @@ public class JSONParser implements Runnable{
         return opponents;
     }
 
+    private Pair<String,String> readJson(String url)
+    {
+        try
+        {
+            URL teamUrl = new URL(url);
+            HttpURLConnection urlConnection = (HttpURLConnection) teamUrl.openConnection();
+            try {
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                JsonReader teamReader = getJSONReader(in);
+                Pair<String,String> data = readTeamObject(teamReader);
+                return data;
+            } finally {
+                urlConnection.disconnect();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String getTeamURL(String slug) throws IOException
+    {
+        String teamUrl = DataLoader.team+slug+"?"+DataLoader.token;
+        return teamUrl;
+    }
+
+    private Pair<String, String> readTeamObject(JsonReader teamReader) throws IOException
+    {
+        String acronym = "";
+        String logoURL = "null";
+        teamReader.beginObject();
+        while(teamReader.hasNext())
+        {
+            String name = teamReader.nextName();
+            if(name.equals("acronym")) acronym = teamReader.nextString();
+            else if(name.equals("image_url") && teamReader.peek() != JsonToken.NULL) logoURL = teamReader.nextString();
+            else teamReader.skipValue();
+        }
+        teamReader.endObject();
+        return Pair.create(acronym, logoURL);
+    }
+
     private String readOpponent() throws IOException
     {
         String opponent = "";
@@ -117,12 +191,12 @@ public class JSONParser implements Runnable{
     }
     private JsonReader getJSONReader(InputStream stream)
     {
-        Reader reader = new InputStreamReader(stream);
-        JsonReader jsonReader = new JsonReader(reader);
+        Reader rd = new InputStreamReader(stream);
+        JsonReader jsonReader = new JsonReader(rd);
         return jsonReader;
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void displayContent(List<Pair<ZonedDateTime, List<String>>> text)
+    public void displayMatchContent(List<Pair<ZonedDateTime, List<String>>> text)
     {
         for(Pair<ZonedDateTime, List<String>> p : text)
         {
@@ -132,6 +206,15 @@ public class JSONParser implements Runnable{
             }
         }
     }
+
+    public void displayTeamContent(Map<String,Pair<String,String>> teams)
+    {
+        for(String key : teams.keySet())
+        {
+            System.out.println("Acronym:" + teams.get(key).first + " Logo URL:" + teams.get(key).second);
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String formatDateAndTime(ZonedDateTime formatted)
     {
@@ -139,6 +222,16 @@ public class JSONParser implements Runnable{
         String stringminutes = Integer.toString(minutes);
         if(minutes == 0) stringminutes+="0";
         return formatted.getMonth() + " " + formatted.getDayOfMonth() + " " + formatted.getYear() + " " + formatted.getHour() + ":" + stringminutes + " UTC";
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private Map<String, Pair<String,String>> getTeamInfo(List<Pair<String,String>> acronymsAndLogoUrls, List<String> slugs) throws IOException {
+        Map<String, Pair<String,String>> teamInfo = new HashMap<>(); // key = team slug, pair.first = team acronym, pair.second = team logo url
+        for(int i = 0; i < slugs.size(); i++)
+        {
+            teamInfo.put(slugs.get(i), acronymsAndLogoUrls.get(i));
+        }
+        return teamInfo;
     }
 
 }
