@@ -1,11 +1,13 @@
 package com.example.liquidlookout;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class UpcomingMatchesActivity extends AppCompatActivity {
     TextView title;
     ListView upcomingMatches;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +45,16 @@ public class UpcomingMatchesActivity extends AppCompatActivity {
         {
             matches = DataLoader.getInstance().getLol().getUpcomingMatches();
         }
-        MyCustomAdapter ad = new MyCustomAdapter(this, R.layout.upcoming_match_layout, matches);
-        upcomingMatches.setAdapter(ad);
+
+        if (matches.isEmpty())
+        {
+            View offseasonText = findViewById(R.id.offseasonText);
+            offseasonText.setVisibility(View.VISIBLE);
+        }
+        else {
+            MyCustomAdapter ad = new MyCustomAdapter(this, R.layout.upcoming_match_layout, matches);
+            upcomingMatches.setAdapter(ad);
+        }
     }
 
     public void goToPrevPage(View v)
