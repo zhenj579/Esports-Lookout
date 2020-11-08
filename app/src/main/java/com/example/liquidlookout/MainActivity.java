@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (v == subMatchButton)
         {
-            Intent subMatchesIntent = new Intent(this, UpcomingMatchesActivity.class);
+            Intent subMatchesIntent = new Intent(this, SubscribedMatchesActivity.class);
             startActivity(subMatchesIntent);
         }
 
