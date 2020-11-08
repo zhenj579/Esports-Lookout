@@ -9,22 +9,18 @@
     android:onClick="GoToUpcomingMatches"
     android:clickable="true">
 
-    <TextView
-        android:id="@+id/nameOfGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/gamePic"
-        android:text="TextView" />
-
     <ImageView
         android:id="@+id/gamePic"
         android:layout_width="109dp"
-        android:layout_height="101dp" />
+        android:layout_height="101dp"
+        android:layout_centerHorizontal="false"
+        android:layout_toLeftOf="@id/blackArrow" />
 
     <ImageView
         android:id="@+id/blackArrow"
         android:layout_width="109dp"
         android:layout_height="101dp"
-        android:layout_toRightOf="@id/nameOfGame" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center" />
 
 </RelativeLayout>
