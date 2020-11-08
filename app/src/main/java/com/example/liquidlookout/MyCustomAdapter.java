@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,17 +38,20 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         convertView= inflater.inflate(R.layout.upcoming_match_layout, parent, false);
         final Button subscribe = (Button) convertView.findViewById(R.id.subscribeButton);
         final Match m = matches.get(pos);
-        updateButton(subscribe, m);
+        updateButtonText(subscribe, m);
+        updateButtonColor(subscribe, m);
         subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(m.isSubscribed()) {
                     Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT).show();
                 }
-                else
+                else {
                     Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT).show();
+                }
                 m.subscribe();
-                updateButton(subscribe, m);
+                updateButtonText(subscribe, m);
+                updateButtonColor(subscribe, m);
             }
         });
         TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);
@@ -66,6 +70,16 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         return convertView;
     }
 
+    private void updateButtonColor(Button b, Match m){
+        if(m.isSubscribed()) {
+            b.setBackgroundColor(Color.DKGRAY);
+            b.setTextColor(Color.LTGRAY);
+        } else {
+            b.setBackgroundColor(Color.RED);
+            b.setTextColor(Color.WHITE);
+        }
+    }
+
     private String getHourAndMinute(ZonedDateTime time) {
         boolean am = time.getHour() - 12 < 0;
         String result = "";
@@ -81,7 +95,7 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         return result;
     }
 
-    private void updateButton(Button b, Match m) {
+    private void updateButtonText(Button b, Match m) {
         if(m.isSubscribed()){
             b.setText("Subscribed!");
         } else {
