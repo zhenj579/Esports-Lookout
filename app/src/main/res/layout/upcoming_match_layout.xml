@@ -19,7 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="3dp"
-        android:text="Subscribe" />
+        android:background="#FF0505"
+        android:text="Subscribe"
+        android:textColor="#FFFFFF" />
 
     <ImageView
         android:id="@+id/team1Image"
