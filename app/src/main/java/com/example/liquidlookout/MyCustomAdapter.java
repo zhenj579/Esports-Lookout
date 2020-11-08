@@ -49,6 +49,8 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);
         ImageView im1 = (ImageView) convertView.findViewById(R.id.team1Image);
         ImageView im2 = (ImageView) convertView.findViewById(R.id.team2Image);
+        TextView time = (TextView) convertView.findViewById(R.id.timeDateText);
+        time.setText(m.getBegin().toString());
         text.setText(m.getMatchName());
         im1.setImageBitmap(m.getTeams().get(0).getLogo());
         im2.setImageBitmap(m.getTeams().get(1).getLogo());
