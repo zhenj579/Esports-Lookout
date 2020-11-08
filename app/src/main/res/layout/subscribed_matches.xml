@@ -105,9 +105,8 @@
     <ListView
         android:id="@+id/subListView"
         android:layout_width="match_parent"
-        android:layout_height="493dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="94dp"
-        android:visibility="gone" />
+        android:layout_height="593dp"
+        android:layout_below="@id/horizontalScrollView"
+        android:visibility="visible" />
 
 </RelativeLayout>
