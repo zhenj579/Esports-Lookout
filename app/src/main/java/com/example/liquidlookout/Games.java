@@ -2,23 +2,20 @@ package com.example.liquidlookout;
 
 public class Games {
     private String name;
-    private String imgUrl;
+    private int img;
 
-    public Games(String name,String url) {
+    public Games(String name,int url) {
         this.name = name;
-        this.imgUrl = url;
+        this.img = url;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public int getImgUrl() {
+        return img;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImgUrl(int imgUrl) {
+        this.img = imgUrl;
     }
-
-
-
 
 
     public String getName() {

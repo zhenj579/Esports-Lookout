@@ -35,16 +35,16 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String nameIn = getItem(position).getName();
-        String imageUrl = getItem(position).getImgUrl();
-
-        Games game = new Games(nameIn,imageUrl);
+        int  imageUrl = getItem(position).getImgUrl();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(res,parent,false);
         TextView vieName = convertView.findViewById(R.id.nameOfGame);
         ImageView imagePic = convertView.findViewById(R.id.gamePic);
+        ImageView BlackArrow = convertView.findViewById(R.id.blackArrow);
         vieName.setText(nameIn);
-        imagePic.setImageResource(R.drawable.teamliquid);
+        imagePic.setImageResource(imageUrl);
+        BlackArrow.setImageResource(R.drawable.arrow_right);
 
 
         return convertView;

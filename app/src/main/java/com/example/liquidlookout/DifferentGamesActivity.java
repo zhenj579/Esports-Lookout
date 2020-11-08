@@ -28,19 +28,12 @@ public class DifferentGamesActivity extends AppCompatActivity implements Adapter
         listOfGames = findViewById(R.id.gamesList);
 
 
-        Games league = new Games("league","drawable://" + R.drawable.leaguelogo);
-        Games league2 = new Games("league2","drawable://" + R.drawable.leaguelogo);
+        Games league = new Games("league", R.drawable.leaguelogo);
+        Games CSGO = new Games("CS GO", R.drawable.csgologo);
         ArrayList<Games> gamesList = new ArrayList<>();
         gamesList.add(league);
-        gamesList.add(league2);
-        gamesList.add(league);
-        gamesList.add(league2);
-        gamesList.add(league);
-        gamesList.add(league2);
-        gamesList.add(league);
-        gamesList.add(league2);
-        gamesList.add(league);
-        gamesList.add(league2);
+        gamesList.add(CSGO);
+
 
         GamesListAdapter gameAdapter = new GamesListAdapter(this,R.layout.diff_games_items_for_list,gamesList);
         listOfGames.setAdapter(gameAdapter);
