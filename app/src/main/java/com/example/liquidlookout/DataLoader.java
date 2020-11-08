@@ -121,7 +121,7 @@ public class DataLoader{
         return sb.toString();
     }
 
-    public static String getWebPageAsString(String purl) {
+    private static String getWebPageAsString(String purl) {
         String result = "-1";
         try {
             URL url = new URL(purl);
@@ -174,7 +174,7 @@ public class DataLoader{
         upcoming.add(match);
     }
 
-    public static boolean checkForTBD(String name) {
+    private static boolean checkForTBD(String name) {
         int l = name.length();
         if(name.charAt(l-3) == 'T' && name.charAt(l-2) == 'B' && name.charAt(l-1) == 'D')
             return true;
