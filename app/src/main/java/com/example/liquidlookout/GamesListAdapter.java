@@ -41,7 +41,6 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(res,parent,false);
 
-        TextView vieName = convertView.findViewById(R.id.nameOfGame);
         ImageView imagePic = convertView.findViewById(R.id.gamePic);
         ImageView BlackArrow = convertView.findViewById(R.id.blackArrow);
 
@@ -56,7 +55,7 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
                 Game g = null;
                 if(gameName.equals("league")) g = Game.LOL;
                 else if(gameName.equals("CSGO")) g = Game.CSGO;
-                upcomingMatchIntent.putExtra(gameName, g );
+                upcomingMatchIntent.putExtra("game_name", g);
                 context.startActivity(upcomingMatchIntent);
             }
         });
