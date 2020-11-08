@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         for(Match e : matches) {
             Log.e("Match", e.toString());
         }
-        ArrayList<Match> matchesC = DataLoader.getInstance().getCsgo().getUpcomingMatches();
+        List<Match> matchesC = DataLoader.getInstance().getCsgo().getUpcomingMatches();
         Log.i("CSGO", "///////////////////////////////////////////////////////////");
         for(Match e : matchesC) {
             Log.e("Match", e.toString());
