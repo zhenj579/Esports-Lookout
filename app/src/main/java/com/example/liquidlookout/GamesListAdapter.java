@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +20,12 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 
-public class GamesListAdapter extends ArrayAdapter<Games> {
+public class GamesListAdapter extends ArrayAdapter<Game> {
     private String TAG = "gamesAdapter";
     private Context context;
     private int res;
 
-    public GamesListAdapter(Context context, int resource, ArrayList<Games> list){
+    public GamesListAdapter(Context context, int resource, ArrayList<Game> list){
         super(context,resource,list);
         this.context=context;
         res=resource;
@@ -52,9 +51,11 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
             public void onClick(View v) {
                 Intent upcomingMatchIntent = new Intent(context,UpcomingMatchesActivity.class);
                 String gameName = getItem(position).getName();
-                Game g = null;
-                if(gameName.equals("league")) g = Game.LOL;
-                else if(gameName.equals("CSGO")) g = Game.CSGO;
+                Games g = null;
+                if(gameName.equals("league")) g = Games.LOL;
+                else if(gameName.equals("CSGO")) g = Games.CSGO;
+                else if(gameName.equals("dota2")) g = Games.DOTA2;
+                else if(gameName.equals("Overwatch")) g = Games.OVERWATCH;
                 upcomingMatchIntent.putExtra("game_name", g);
                 context.startActivity(upcomingMatchIntent);
             }
