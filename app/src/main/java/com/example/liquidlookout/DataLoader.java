@@ -41,7 +41,7 @@ public class DataLoader{
     private LOL lol;
     private CSGO csgo;
 
-    private static ExecutorService es = Executors.newFixedThreadPool(2);
+    private ExecutorService es = Executors.newFixedThreadPool(2);
 
     private boolean lolLoaded = false;
     private boolean csLoaded = false;
@@ -98,6 +98,7 @@ public class DataLoader{
     private void releaseObj(Object caller) {
         if(caller instanceof DataObserver){
             ((DataObserver)caller).update();
+            es.shutdown();
             return;
         }
         synchronized (caller) {
