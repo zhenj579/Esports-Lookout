@@ -20,7 +20,7 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
     String testLeague[] = {"tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm"};
     String testCSGO[] = {"tsmcs", "tsmcs","tsmcs","tsmcs","tsmcs","tsmcs","tsmcs"};
     String sad[] = {"Not implemented yet :("};
-    ArrayList<Match> testArray = DataLoader.getInstance().getLol().getUpcomingMatches();
+    ArrayList<Match> testArray = NotificationDispatcher.getSubscribedMatches();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

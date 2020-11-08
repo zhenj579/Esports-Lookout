@@ -39,6 +39,10 @@ public class NotificationDispatcher {
         });
     }
 
+    public static ArrayList<Match> getSubscribedMatches() {
+        return subscribedMatches;
+    }
+
     public static void addMatch(Match m) {
         subscribedMatches.add(m);
     }

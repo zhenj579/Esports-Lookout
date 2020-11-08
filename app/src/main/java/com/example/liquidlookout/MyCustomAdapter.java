@@ -89,15 +89,4 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         }
     }
 
-    public void sendNotification() {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context,"12")
-                        .setSmallIcon(R.drawable.teamliquid)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(001, mBuilder.build());
-    }
-
 }
