@@ -53,9 +53,16 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         ImageView im1 = (ImageView) convertView.findViewById(R.id.team1Image);
         ImageView im2 = (ImageView) convertView.findViewById(R.id.team2Image);
         TextView time = (TextView) convertView.findViewById(R.id.timeDateText);
+
+        TextView teamName1 = (TextView)convertView.findViewById(R.id.Team1Name);
+        TextView teamName2 = (TextView)convertView.findViewById(R.id.Team2Name);
+
         ZonedDateTime matchTime = m.getBegin().withZoneSameLocal(ZoneId.systemDefault());
         time.setText(matchTime.getMonth().toString() + ", " + matchTime.getDayOfMonth() + " " + matchTime.getYear() + "\n" + getHourAndMinute(matchTime));
         text.setText(m.getMatchName());
+
+        teamName1.setText(m.getTeams().get(0).getName());
+        teamName2.setText(m.getTeams().get(1).getName());
 
         Bitmap logo1 = m.getTeams().get(0).getLogo();
         Bitmap logo2 = m.getTeams().get(1).getLogo();
