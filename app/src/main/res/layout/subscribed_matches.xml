@@ -46,6 +46,15 @@
                 app:srcCompat="@drawable/csgologo" />
 
             <ImageView
+                android:id="@+id/overwatchView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
+                app:srcCompat="@drawable/overwatchlogo" />
+
+            <ImageView
                 android:id="@+id/dotaView"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
