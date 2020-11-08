@@ -6,11 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class MyCustomAdapter extends BaseAdapter {
     Context context;
@@ -40,8 +36,8 @@ public class MyCustomAdapter extends BaseAdapter {
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView= inflater.inflate(R.layout.custom_layout, parent, false);
-        TextView text = (TextView) convertView.findViewById(R.id.teamMatchText); //recognize your view like this
+        convertView= inflater.inflate(R.layout.upcoming_match_layout, parent, false);
+        TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);
         text.setText(data[pos]);
         return convertView;
     }
