@@ -35,7 +35,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="chose your game"
+        android:text="Choose A Game"
         android:textAlignment="center"
 
         android:textSize="24sp"
