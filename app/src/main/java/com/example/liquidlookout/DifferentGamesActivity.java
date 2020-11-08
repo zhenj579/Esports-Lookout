@@ -24,7 +24,7 @@ public class DifferentGamesActivity extends AppCompatActivity  {
         //seting up the activity by geting info from the xml
         setContentView(R.layout.different_games_activity);
         DiffGamesHomeButton = findViewById(R.id.DiffGamesHomeButton);
-        listOfGames = findViewById(R.id.gamesList);
+        listOfGames = findViewById(R.id.gameList);
 
         //making two game objects league and csgo
         Games league = new Games("league", R.drawable.leaguelogo);
