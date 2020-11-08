@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 public class NotificationDispatcher {
 
-    private static ArrayList<Match> subsribedMatches = new ArrayList<>();
+    private static ArrayList<Match> subscribedMatches = new ArrayList<>();
     private static ExecutorService es = Executors.newSingleThreadExecutor();
     private static Context context;
 
@@ -25,7 +25,7 @@ public class NotificationDispatcher {
             public void run() {
                 while (true) {
                     try {
-                        for(Match e : subsribedMatches) {
+                        for(Match e : subscribedMatches) {
                             if (Math.abs(ZonedDateTime.now().toEpochSecond() - e.getBegin().toEpochSecond()) <= 60) {
                                 e.sendNotification(context);
                             }
@@ -40,17 +40,17 @@ public class NotificationDispatcher {
     }
 
     public static void addMatch(Match m) {
-        subsribedMatches.add(m);
+        subscribedMatches.add(m);
     }
 
     public static void removeMatch(Match m) {
-        subsribedMatches.remove(m);
+        subscribedMatches.remove(m);
     }
 
     public static void sendNotification(String title, String msg) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context,"12")
-                        .setSmallIcon(R.drawable.teamliquid)
+                        .setSmallIcon(R.drawable.appicon)
                         .setContentTitle(title)
                         .setContentText(msg);
 
