@@ -39,8 +39,13 @@ public class NotificationDispatcher {
         });
     }
 
-    public static ArrayList<Match> getSubscribedMatches() {
-        return subscribedMatches;
+    public static ArrayList<Match> getSubscribedMatches(Games g) {
+        ArrayList<Match> matches = new ArrayList<>();
+        for(Match m : subscribedMatches)
+        {
+            if(m.getGame() == g) matches.add(m);
+        }
+        return matches;
     }
 
     public static void addMatch(Match m) {
