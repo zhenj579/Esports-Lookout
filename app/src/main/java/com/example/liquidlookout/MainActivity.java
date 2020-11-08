@@ -33,14 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DiffGamesButton = findViewById(R.id.gamesButton);
         subMatchButton = findViewById(R.id.subscribedButton);
-//        //https://api.pandascore.co/lol/matches/upcoming?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ
-//        JSONParser parser = new JSONParser(DataLoader.lolUrl+DataLoader.searchRange+DataLoader.token);
-//        //https://api.pandascore.co/csgo/matches?range[begin_at]=2020-11-07T17:00:00Z,2039-04-08T17:00:00Z&token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ
-//        Thread t = new Thread(parser);
-//        t.start();
-        long start = System.currentTimeMillis();
-        DataLoader.loadData(this);
-        Log.e("Elapsed Time", ((System.currentTimeMillis() - start) / 1000.0) + " seconds");
     }
 
     private void printData() {
