@@ -9,17 +9,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoadingActivity extends AppCompatActivity implements DataObserver{
 
+    private long start;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading_activity);
-        long start = System.currentTimeMillis();
         DataLoader.loadData(this);
-        Log.e("Elapsed Time", ((System.currentTimeMillis() - start) / 1000.0) + " seconds");
+        start = System.currentTimeMillis();
     }
 
     @Override
     public void update() {
+        Log.e("Elapsed Time", ((System.currentTimeMillis() - start) / 1000.0) + " seconds");
         Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
     }

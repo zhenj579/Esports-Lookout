@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,9 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);
         ImageView im1 = (ImageView) convertView.findViewById(R.id.team1Image);
         ImageView im2 = (ImageView) convertView.findViewById(R.id.team2Image);
+        TextView time = (TextView) convertView.findViewById(R.id.timeDateText);
+        ZonedDateTime matchTime = m.getBegin().withZoneSameLocal(ZoneId.systemDefault());
+        time.setText(matchTime.toString());
         text.setText(m.getMatchName());
 
         Bitmap logo1 = m.getTeams().get(0).getLogo();
