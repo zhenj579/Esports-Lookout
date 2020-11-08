@@ -55,20 +55,31 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         ImageView im2 = (ImageView) convertView.findViewById(R.id.team2Image);
         TextView time = (TextView) convertView.findViewById(R.id.timeDateText);
         ZonedDateTime matchTime = m.getBegin().withZoneSameLocal(ZoneId.systemDefault());
-        time.setText(matchTime.toString());
+        time.setText(matchTime.getMonth().toString() + ", " + matchTime.getDayOfMonth() + " " + matchTime.getYear() + "\n" + getHourAndMinute(matchTime));
         text.setText(m.getMatchName());
 
         Bitmap logo1 = m.getTeams().get(0).getLogo();
         Bitmap logo2 = m.getTeams().get(1).getLogo();
-        Bitmap nulllogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.nulllogo);
-        if(logo1 == null) logo1 = nulllogo;
-        if(logo2 == null) logo2 = nulllogo;
         im1.setImageBitmap(logo1);
         im2.setImageBitmap(logo2);
 
         return convertView;
     }
 
+    private String getHourAndMinute(ZonedDateTime time) {
+        boolean am = time.getHour() - 12 < 0;
+        String result = "";
+        if(am) {
+            result += time.getHour();
+            result += time.getMinute() == 0 ? "" : ":" + time.getMinute();
+            result += " am";
+        } else {
+            result += Math.abs(time.getHour() - 12);
+            result += time.getMinute() == 0 ? "" : ":" + time.getMinute();
+            result += " pm";
+        }
+        return result;
+    }
 
     private void updateButton(Button b, Match m) {
         if(m.isSubscribed()){
