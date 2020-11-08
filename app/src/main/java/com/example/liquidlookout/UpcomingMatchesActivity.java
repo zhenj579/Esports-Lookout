@@ -4,16 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UpcomingMatchesActivity extends AppCompatActivity {
     Button backButton;
     TextView title;
     ListView upcomingMatches;
-    String testUpcoming[] = {"your mom vs ur dad", "ur dog vs ur cat", "tim vs mouse"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,17 @@ public class UpcomingMatchesActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         title = findViewById(R.id.upMatchText);
         upcomingMatches = findViewById(R.id.upcomingMatchesList);
-
-        MyCustomAdapter ad = new MyCustomAdapter(this, testUpcoming);
+        Game g = (Game)getIntent().getSerializableExtra("game_name");
+        List<Match> matches = new ArrayList<>();
+        if(g == Game.CSGO)
+        {
+            matches = DataLoader.getInstance().getCsgo().getUpcomingMatches();
+        }
+        else if(g == Game.LOL)
+        {
+            matches = DataLoader.getInstance().getLol().getUpcomingMatches();
+        }
+        MyCustomAdapter ad = new MyCustomAdapter(this, R.layout.upcoming_match_layout, matches);
         upcomingMatches.setAdapter(ad);
     }
 
