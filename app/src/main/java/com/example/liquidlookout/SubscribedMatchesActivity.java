@@ -10,6 +10,9 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SubscribedMatchesActivity extends AppCompatActivity {
     Button goHomeButton;
     ImageView leagueLogo, csgoLogo, apexLogo, fortLogo, dotaLogo, smashLogo, valorantLogo;
@@ -17,6 +20,7 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
     String testLeague[] = {"tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm"};
     String testCSGO[] = {"tsmcs", "tsmcs","tsmcs","tsmcs","tsmcs","tsmcs","tsmcs"};
     String sad[] = {"Not implemented yet :("};
+    ArrayList<Match> testArray = DataLoader.getInstance().getLol().getUpcomingMatches();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +42,22 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         finish();
     }
 
-    public void showMatches(String[] a)
+    public void showMatches(List<Match> matches)
     {
-        ArrayAdapter<String> matchesAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,a);
-        subMatches.setAdapter(matchesAdapter);
+
+        MyCustomAdapter ad = new MyCustomAdapter(this, R.layout.upcoming_match_layout, matches);
+        subMatches.setAdapter(ad);
         subMatches.setVisibility(View.VISIBLE);
     }
 
     public void subPageOnClick(View v)
     {
         if (v == leagueLogo)
-            showMatches(testLeague);
+            showMatches(testArray);
         if (v == csgoLogo)
-            showMatches(testCSGO);
-        if (v == apexLogo || v == fortLogo || v == dotaLogo || v == smashLogo || v == valorantLogo)
-            showMatches(sad);
+            showMatches(testArray);
+        //if (v == apexLogo || v == fortLogo || v == dotaLogo || v == smashLogo || v == valorantLogo)
+            //showMatches(sad);
 
     }
 
