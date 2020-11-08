@@ -1,4 +1,4 @@
-package com.example.esportslookout;
+package com.example.liquidlookout;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
