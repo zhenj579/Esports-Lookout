@@ -27,12 +27,9 @@ public class UpcomingMatchesActivity extends AppCompatActivity {
         upcomingMatches.setAdapter(ad);
     }
 
-    public void goToPrevPage()
+    public void goToPrevPage(View v)
     {
-        backButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        if (v == backButton)
+            finish();
     }
 }
