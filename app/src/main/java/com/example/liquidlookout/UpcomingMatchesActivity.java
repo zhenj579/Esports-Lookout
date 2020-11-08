@@ -2,10 +2,7 @@ package com.example.liquidlookout;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,13 +23,22 @@ public class UpcomingMatchesActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         title = findViewById(R.id.upMatchText);
         upcomingMatches = findViewById(R.id.upcomingMatchesList);
-        Game g = (Game)getIntent().getSerializableExtra("game_name");
-        List<Match> matches = new ArrayList<>();
-        if(g == Game.CSGO)
+        Games g = (Games)getIntent().getSerializableExtra("game_name");
+
+        List<Match> matches = null;
+        if(g == Games.OVERWATCH)
+        {
+            matches = DataLoader.getInstance().getOW().getUpcomingMatches();
+        }
+        else if(g == Games.DOTA2)
+        {
+            matches = DataLoader.getInstance().getDota2().getUpcomingMatches();
+        }
+        else if(g == Games.CSGO)
         {
             matches = DataLoader.getInstance().getCsgo().getUpcomingMatches();
         }
-        else if(g == Game.LOL)
+        else if(g == Games.LOL)
         {
             matches = DataLoader.getInstance().getLol().getUpcomingMatches();
         }
