@@ -1,6 +1,7 @@
 package com.example.liquidlookout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,21 +35,33 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        //geting input name and pictures
         String nameIn = getItem(position).getName();
-        String imageUrl = getItem(position).getImgUrl();
-
-        Games game = new Games(nameIn,imageUrl);
+        int  imageUrl = getItem(position).getImgUrl();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(res,parent,false);
+
         TextView vieName = convertView.findViewById(R.id.nameOfGame);
         ImageView imagePic = convertView.findViewById(R.id.gamePic);
-        vieName.setText(nameIn);
-        imagePic.setImageResource(R.drawable.teamliquid);
+        ImageView BlackArrow = convertView.findViewById(R.id.blackArrow);
 
+        vieName.setText(nameIn);
+        imagePic.setImageResource(imageUrl);
+        BlackArrow.setImageResource(R.drawable.arrow_right);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent upcomingMatchIntent = new Intent(context,UpcomingMatchesActivity.class);
+                context.startActivity(upcomingMatchIntent);
+            }
+        });
 
         return convertView;
     }
+
+
 
 
 }
