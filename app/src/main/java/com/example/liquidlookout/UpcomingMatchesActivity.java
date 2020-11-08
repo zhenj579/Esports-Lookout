@@ -1,6 +1,7 @@
 package com.example.liquidlookout;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,5 +25,14 @@ public class UpcomingMatchesActivity extends AppCompatActivity {
 
         MyCustomAdapter ad = new MyCustomAdapter(this, testUpcoming);
         upcomingMatches.setAdapter(ad);
+    }
+
+    public void goToPrevPage()
+    {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
