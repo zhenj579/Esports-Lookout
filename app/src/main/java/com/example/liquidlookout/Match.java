@@ -8,6 +8,7 @@ public class Match {
     private String matchName;
     private ArrayList<Team> teams;
     private ZonedDateTime begin;
+    private boolean subscribed;
 
     public Match() {
         teams = new ArrayList<>();
@@ -32,6 +33,12 @@ public class Match {
     public void setBegin(ZonedDateTime begin) {
         this.begin = begin;
     }
+
+    public void subscribe() {subscribed = true; }
+
+    public void unsubscribe() {subscribed = false; }
+
+    public boolean isSubscribed() { return subscribed; }
 
     @Override
     public String toString() {
