@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -92,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
     //test commit Richard
 }
