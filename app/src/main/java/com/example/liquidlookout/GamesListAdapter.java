@@ -34,9 +34,8 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //geting input name and pictures
-        String nameIn = getItem(position).getName();
         int  imageUrl = getItem(position).getImgUrl();
 
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -46,7 +45,6 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
         ImageView imagePic = convertView.findViewById(R.id.gamePic);
         ImageView BlackArrow = convertView.findViewById(R.id.blackArrow);
 
-        vieName.setText(nameIn);
         imagePic.setImageResource(imageUrl);
         BlackArrow.setImageResource(R.drawable.arrow_right);
 
@@ -54,6 +52,11 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
             @Override
             public void onClick(View v) {
                 Intent upcomingMatchIntent = new Intent(context,UpcomingMatchesActivity.class);
+                String gameName = getItem(position).getName();
+                Game g = null;
+                if(gameName.equals("league")) g = Game.LOL;
+                else if(gameName.equals("CSGO")) g = Game.CSGO;
+                upcomingMatchIntent.putExtra(gameName, g );
                 context.startActivity(upcomingMatchIntent);
             }
         });
