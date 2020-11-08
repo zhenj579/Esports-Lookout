@@ -17,6 +17,7 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
     Button goHomeButton;
     ImageView leagueLogo, csgoLogo, apexLogo, fortLogo, dotaLogo, smashLogo, valorantLogo, overwatchLogo;
     ListView subMatches;
+    ArrayList<String> sad = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         goHomeButton = findViewById(R.id.subscribedHomeButton);
         subMatches = findViewById(R.id.subListView);
         overwatchLogo = findViewById(R.id.overwatchView);
+
+        sad.add("Not implemented yet :(");
     }
 
     public void goHome(View v)
@@ -64,7 +67,11 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         {
             showMatches(Games.OVERWATCH);
         }
-
+        if (v == apexLogo || v == fortLogo || v == smashLogo || v == valorantLogo)
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,sad);
+            subMatches.setAdapter(adapter);
+        }
 
     }
 
