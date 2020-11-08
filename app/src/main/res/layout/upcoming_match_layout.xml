@@ -8,12 +8,13 @@
         android:layout_width="306dp"
         android:layout_height="51dp"
         android:layout_marginEnd="6dp"
-        android:layout_toStartOf="@+id/team2Image"
+        android:layout_toStartOf="@+id/subscribeButton"
         android:text="TextView"
+        android:gravity="center"
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/team2Image"
+        android:id="@+id/subscribeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -23,21 +24,25 @@
     <ImageView
         android:id="@+id/team1Image"
         android:layout_width="100dp"
-        android:layout_height="93dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/teamMatchText"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="288dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="290dp"
         app:srcCompat="@drawable/leaguelogo" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/team2Image"
         android:layout_width="100dp"
-        android:layout_height="93dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/teamMatchText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="25dp"
         app:srcCompat="@drawable/csgologo" />
 
 </RelativeLayout>
