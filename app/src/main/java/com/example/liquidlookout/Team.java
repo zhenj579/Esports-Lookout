@@ -1,10 +1,7 @@
-package com.example.liquidlookout;
+package com.example.esportslookout;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -55,6 +52,10 @@ public class Team {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        else
+        {
+            logo = LoadingActivity.nullLogo;
         }
     }
 
