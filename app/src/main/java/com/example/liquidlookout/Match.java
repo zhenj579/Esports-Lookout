@@ -1,7 +1,5 @@
 package com.example.liquidlookout;
 
-import androidx.annotation.NonNull;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
@@ -45,4 +43,5 @@ public class Match {
         }
         return result;
     }
+
 }
