@@ -12,13 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-
 import java.util.ArrayList;
 
 public class GamesListAdapter extends ArrayAdapter<Games> {
@@ -35,18 +28,15 @@ public class GamesListAdapter extends ArrayAdapter<Games> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //geting input name and pictures
-        String nameIn = getItem(position).getName();
+        //geting pictures
         int  imageUrl = getItem(position).getImgUrl();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(res,parent,false);
 
-        TextView vieName = convertView.findViewById(R.id.nameOfGame);
         ImageView imagePic = convertView.findViewById(R.id.gamePic);
         ImageView BlackArrow = convertView.findViewById(R.id.blackArrow);
 
-        vieName.setText(nameIn);
         imagePic.setImageResource(imageUrl);
         BlackArrow.setImageResource(R.drawable.arrow_right);
 
