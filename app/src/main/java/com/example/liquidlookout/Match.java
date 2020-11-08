@@ -11,7 +11,9 @@ public class Match {
     private boolean subscribed;
 
     public Match() {
+
         teams = new ArrayList<>();
+        subscribed = false;
     }
 
     public String getMatchName() {
@@ -34,9 +36,11 @@ public class Match {
         this.begin = begin;
     }
 
-    public void subscribe() {subscribed = true; }
+    public void subscribe() {
+        if(!subscribed) subscribed = true;
+        else subscribed = false;
+    }
 
-    public void unsubscribe() {subscribed = false; }
 
     public boolean isSubscribed() { return subscribed; }
 

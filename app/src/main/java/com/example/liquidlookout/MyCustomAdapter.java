@@ -32,14 +32,14 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
     public View getView(int pos, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView= inflater.inflate(R.layout.upcoming_match_layout, parent, false);
-        Button subscribe = (Button)convertView.findViewById(R.id.subscribeButton);
+        Button subscribe = (Button) convertView.findViewById(R.id.subscribeButton);
         final Match m = matches.get(pos);
         subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(m.isSubscribed()) Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT).show();
                 m.subscribe();
-                if(m.isSubscribed()) Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT);
-                else Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT);
                 sendNotification();
             }
         });
