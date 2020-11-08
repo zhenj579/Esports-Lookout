@@ -15,7 +15,7 @@ public class CSGO {
     private ArrayList<Match> upcoming;
 
     public CSGO() {
-        upcoming = DataLoader.fetchUpcomingMatches(DataLoader.csUrl + DataLoader.token);
+        upcoming = DataLoader.fetchUpcomingMatches(Game.CSGO);
     }
 
     public ArrayList<Match> getUpcomingMatches() {

@@ -12,7 +12,7 @@ public class LOL {
     private ArrayList<Match> upcoming;
 
     public LOL() {
-        upcoming = DataLoader.fetchUpcomingMatches(DataLoader.lolUrl + DataLoader.token);
+        upcoming = DataLoader.fetchUpcomingMatches(Game.LOL);
     }
 
 

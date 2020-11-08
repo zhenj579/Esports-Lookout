@@ -147,11 +147,20 @@ public class DataLoader{
         return result;
     }
 
-    public static ArrayList<Match> fetchUpcomingMatches(String ulr) {
+    public static ArrayList<Match> fetchUpcomingMatches(Game g) {
         ArrayList<Match> upcoming = new ArrayList<>();
-        String test = DataLoader.getWebPageAsString(DataLoader.csUrl + DataLoader.token);
+        String url = null;
+
+        if(g == Game.LOL)
+        {
+            url = getWebPageAsString(lolUrl + searchRange + token);
+        }
+        else if(g == Game.CSGO)
+        {
+            url = getWebPageAsString(csUrl + searchRange + token);
+        }
         try {
-            JSONArray jsonArr = new JSONArray(test);
+            JSONArray jsonArr = new JSONArray(url);
             for(int i = 0; i < jsonArr.length(); i++) {
                 JSONObject obj = jsonArr.getJSONObject(i);
                 addMatch(upcoming, obj);
