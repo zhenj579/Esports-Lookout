@@ -28,7 +28,7 @@ public class DifferentGamesActivity extends AppCompatActivity  {
 
         //making two game objects league and csgo
         Games league = new Games("league", R.drawable.leaguelogo);
-        Games CSGO = new Games("CS GO", R.drawable.csgologo);
+        Games CSGO = new Games("CSGO", R.drawable.csgologo);
         //making a list of those games
         ArrayList<Games> gamesList = new ArrayList<>();
         gamesList.add(league);
