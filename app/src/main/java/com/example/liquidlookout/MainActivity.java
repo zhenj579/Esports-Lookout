@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //        Thread t = new Thread(parser);
 //        t.start();
         long start = System.currentTimeMillis();
-        DataLoader.loadData(Thread.currentThread());
-        //printData();
+        DataLoader.loadData(this);
         Log.e("Elapsed Time", ((System.currentTimeMillis() - start) / 1000.0) + " seconds");
     }
 

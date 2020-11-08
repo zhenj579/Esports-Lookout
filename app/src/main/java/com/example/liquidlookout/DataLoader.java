@@ -1,6 +1,7 @@
 package com.example.liquidlookout;
 
 import android.os.Build;
+import android.util.Pair;
 
 import androidx.annotation.RequiresApi;
 
@@ -45,43 +46,48 @@ public class DataLoader{
 
     private static ExecutorService es = Executors.newFixedThreadPool(2);
 
-    private DataLoader(final Thread caller) {
-        if(loader == null) {
-            loader = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    es.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            lol = new LOL();
-                        }
-                    });
-                    es.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            csgo = new CSGO();
-                            es.shutdown();
-                        }
-                    });
-                    try {
-                        es.awaitTermination(20, TimeUnit.SECONDS);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    synchronized (caller) {
-                        caller.notify();
-                    }
+    private boolean lolLoaded = false;
+    private boolean csLoaded = false;
+
+    private DataLoader(final Object caller) {
+        es.execute(new Runnable() {
+            @Override
+            public void run() {
+                lol = new LOL();
+                if(csLoaded) {
+                    releaseObj(caller);
                 }
-            });
+                lolLoaded = true;
+            }
+        });
+        es.execute(new Runnable() {
+            @Override
+            public void run() {
+                csgo = new CSGO();
+                if(lolLoaded) {
+                    releaseObj(caller);
+                }
+                csLoaded = true;
+            }
+        });
+        synchronized (caller) {
+            caller.notify();
         }
-        loader.start();
+
     }
 
-    public static synchronized void reloadData(Thread caller) {
+    private void releaseObj(Object caller) {
+        synchronized (caller) {
+            es.shutdown();
+            caller.notify();
+        }
+    }
+
+    public static synchronized void reloadData(Object caller) {
         dt = new DataLoader(caller);
     }
 
-    public static synchronized void loadData(Thread caller) {
+    public static synchronized void loadData(Object caller) {
         if(dt == null) {
             synchronized (caller) {
                 try {
