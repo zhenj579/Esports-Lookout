@@ -37,18 +37,18 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                m.subscribe();
                 if(m.isSubscribed()) Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT);
                 else Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT);
-                m.subscribe();
                 sendNotification();
             }
         });
         TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);
-        ImageView im1 = (ImageView)convertView.findViewById(R.id.team1Image);
-        ImageView im2 = (ImageView)convertView.findViewById(R.id.team2Image);
+        ImageView im1 = (ImageView) convertView.findViewById(R.id.team1Image);
+        ImageView im2 = (ImageView) convertView.findViewById(R.id.team2Image);
         text.setText(m.getMatchName());
         im1.setImageBitmap(m.getTeams().get(0).getLogo());
-        im2.setImageBitmap(m.getTeams().get(0).getLogo());
+        im2.setImageBitmap(m.getTeams().get(1).getLogo());
 
         return convertView;
     }
