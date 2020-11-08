@@ -3,6 +3,8 @@ package com.example.liquidlookout;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,11 +52,18 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         ImageView im1 = (ImageView) convertView.findViewById(R.id.team1Image);
         ImageView im2 = (ImageView) convertView.findViewById(R.id.team2Image);
         text.setText(m.getMatchName());
-        im1.setImageBitmap(m.getTeams().get(0).getLogo());
-        im2.setImageBitmap(m.getTeams().get(1).getLogo());
+
+        Bitmap logo1 = m.getTeams().get(0).getLogo();
+        Bitmap logo2 = m.getTeams().get(1).getLogo();
+        Bitmap nulllogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.nulllogo);
+        if(logo1 == null) logo1 = nulllogo;
+        if(logo2 == null) logo2 = nulllogo;
+        im1.setImageBitmap(logo1);
+        im2.setImageBitmap(logo2);
 
         return convertView;
     }
+
 
     private void updateButton(Button b, Match m) {
         if(m.isSubscribed()){
