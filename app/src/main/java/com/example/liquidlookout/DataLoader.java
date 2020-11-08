@@ -1,6 +1,7 @@
 package com.example.liquidlookout;
 
 import android.os.Build;
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.RequiresApi;
@@ -41,9 +42,9 @@ public class DataLoader{
     private LOL lol;
     private CSGO csgo;
 
-    private ExecutorService es = Executors.newFixedThreadPool(2);
-
     private final static int NUM_OF_GAMES = 2;
+    private ExecutorService es = Executors.newFixedThreadPool(NUM_OF_GAMES);
+
     private int count = 0;
 
     private DataLoader(final DataObserver caller) {
@@ -83,11 +84,9 @@ public class DataLoader{
         }
     }
 
-    private void checkIfDone(Object caller) {
-        if(count == NUM_OF_GAMES) {
+    private synchronized void checkIfDone(Object caller) {
+        if(++count == NUM_OF_GAMES) {
             releaseObj(caller);
-        } else {
-            count++;
         }
     }
 
