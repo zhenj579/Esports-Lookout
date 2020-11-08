@@ -49,6 +49,29 @@ public class DataLoader{
     private boolean lolLoaded = false;
     private boolean csLoaded = false;
 
+    private DataLoader(final DataObserver caller) {
+        es.execute(new Runnable() {
+            @Override
+            public void run() {
+                lol = new LOL();
+                if(csLoaded) {
+                    releaseObj(caller);
+                }
+                lolLoaded = true;
+            }
+        });
+        es.execute(new Runnable() {
+            @Override
+            public void run() {
+                csgo = new CSGO();
+                if(lolLoaded) {
+                    releaseObj(caller);
+                }
+                csLoaded = true;
+            }
+        });
+    }
+
     private DataLoader(final Object caller) {
         es.execute(new Runnable() {
             @Override
@@ -73,10 +96,13 @@ public class DataLoader{
         synchronized (caller) {
             caller.notify();
         }
-
     }
 
     private void releaseObj(Object caller) {
+        if(caller instanceof DataObserver){
+            ((DataObserver)caller).update();
+            return;
+        }
         synchronized (caller) {
             es.shutdown();
             caller.notify();
@@ -85,6 +111,13 @@ public class DataLoader{
 
     public static synchronized void reloadData(Object caller) {
         dt = new DataLoader(caller);
+    }
+
+    public static synchronized void loadData(DataObserver caller) {
+        if(dt == null) {
+            dt = new DataLoader(caller);
+            loaded = true;
+        }
     }
 
     public static synchronized void loadData(Object caller) {

@@ -12,11 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SubscribedMatchesActivity extends AppCompatActivity {
     Button goHomeButton;
-    ImageView leagueLogo;
-    ImageView csgoLogo;
+    ImageView leagueLogo, csgoLogo, apexLogo, fortLogo, dotaLogo, smashLogo, valorantLogo;
     ListView subMatches;
     String testLeague[] = {"tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm"};
     String testCSGO[] = {"tsmcs", "tsmcs","tsmcs","tsmcs","tsmcs","tsmcs","tsmcs"};
+    String sad[] = {"Not implemented yet :("};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,11 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         setContentView(R.layout.subscribed_matches);
         leagueLogo = findViewById(R.id.lolView);
         csgoLogo = findViewById(R.id.csgoView);
+        apexLogo = findViewById(R.id.apexView);
+        fortLogo = findViewById(R.id.fortniteView);
+        dotaLogo = findViewById(R.id.dotaView);
+        smashLogo = findViewById(R.id.smashView);
+        valorantLogo = findViewById(R.id.valorantView);
         goHomeButton = findViewById(R.id.subscribedHomeButton);
         subMatches = findViewById(R.id.subListView);
     }
@@ -46,6 +51,9 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
             showMatches(testLeague);
         if (v == csgoLogo)
             showMatches(testCSGO);
+        if (v == apexLogo || v == fortLogo || v == dotaLogo || v == smashLogo || v == valorantLogo)
+            showMatches(sad);
+
     }
 
 }
