@@ -52,20 +52,19 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         {
             showMatches(Games.LOL);
         }
-        else if (v == csgoLogo)
+        if (v == csgoLogo)
         {
             showMatches(Games.CSGO);
         }
-        else if (v == dotaLogo)
+        if (v == dotaLogo)
         {
             showMatches(Games.DOTA2);
         }
-        else if (v == overwatchLogo)
+        if (v == overwatchLogo)
         {
             showMatches(Games.OVERWATCH);
         }
-        //if (v == apexLogo || v == fortLogo || v == dotaLogo || v == smashLogo || v == valorantLogo)
-            //showMatches(sad);
+
 
     }
 
