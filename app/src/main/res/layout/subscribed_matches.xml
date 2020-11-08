@@ -12,9 +12,9 @@
         android:layout_below="@+id/horizontalScrollView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="495dp"
-        android:layout_marginEnd="259dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="591dp"
+        android:layout_marginEnd="262dp"
         android:onClick="goHome"
         android:text="@string/homeButton" />
 
@@ -44,6 +44,51 @@
                 android:focusable="auto"
                 android:onClick="subPageOnClick"
                 app:srcCompat="@drawable/csgologo" />
+
+            <ImageView
+                android:id="@+id/dotaView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
+                app:srcCompat="@drawable/dotalogo" />
+
+            <ImageView
+                android:id="@+id/valorantView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
+                app:srcCompat="@drawable/valorantlogo" />
+
+            <ImageView
+                android:id="@+id/fortniteView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
+                app:srcCompat="@drawable/fortnitelogo" />
+
+            <ImageView
+                android:id="@+id/apexView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
+                app:srcCompat="@drawable/apexlogo" />
+
+            <ImageView
+                android:id="@+id/smashView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:clickable="true"
+                android:focusable="auto"
+                android:onClick="subPageOnClick"
+                app:srcCompat="@drawable/smashlogo" />
 
         </LinearLayout>
     </HorizontalScrollView>
