@@ -43,28 +43,22 @@ public class DataLoader{
 
     private ExecutorService es = Executors.newFixedThreadPool(2);
 
-    private boolean lolLoaded = false;
-    private boolean csLoaded = false;
+    private final static int NUM_OF_GAMES = 2;
+    private int count = 0;
 
     private DataLoader(final DataObserver caller) {
         es.execute(new Runnable() {
             @Override
             public void run() {
                 lol = new LOL();
-                if(csLoaded) {
-                    releaseObj(caller);
-                }
-                lolLoaded = true;
+                checkIfDone(caller);
             }
         });
         es.execute(new Runnable() {
             @Override
             public void run() {
                 csgo = new CSGO();
-                if(lolLoaded) {
-                    releaseObj(caller);
-                }
-                csLoaded = true;
+                checkIfDone(caller);
             }
         });
     }
@@ -74,24 +68,26 @@ public class DataLoader{
             @Override
             public void run() {
                 lol = new LOL();
-                if(csLoaded) {
-                    releaseObj(caller);
-                }
-                lolLoaded = true;
+                checkIfDone(caller);
             }
         });
         es.execute(new Runnable() {
             @Override
             public void run() {
                 csgo = new CSGO();
-                if(lolLoaded) {
-                    releaseObj(caller);
-                }
-                csLoaded = true;
+                checkIfDone(caller);
             }
         });
         synchronized (caller) {
             caller.notify();
+        }
+    }
+
+    private void checkIfDone(Object caller) {
+        if(count == NUM_OF_GAMES) {
+            releaseObj(caller);
+        } else {
+            count++;
         }
     }
 
