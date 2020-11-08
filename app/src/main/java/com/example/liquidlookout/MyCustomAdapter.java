@@ -21,7 +21,6 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
     Context context;
     List<Match> matches;
 
-
     public MyCustomAdapter(Context context, int resource, List<Match> matches) {
         super(context,resource, matches);
         this.context = context;
@@ -32,15 +31,19 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
     public View getView(int pos, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView= inflater.inflate(R.layout.upcoming_match_layout, parent, false);
-        Button subscribe = (Button) convertView.findViewById(R.id.subscribeButton);
+        final Button subscribe = (Button) convertView.findViewById(R.id.subscribeButton);
         final Match m = matches.get(pos);
+        updateButton(subscribe, m);
         subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(m.isSubscribed()) Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT).show();
+                if(m.isSubscribed()) {
+                    Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT).show();
                 m.subscribe();
-                sendNotification();
+                updateButton(subscribe, m);
             }
         });
         TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);
@@ -51,6 +54,14 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         im2.setImageBitmap(m.getTeams().get(1).getLogo());
 
         return convertView;
+    }
+
+    private void updateButton(Button b, Match m) {
+        if(m.isSubscribed()){
+            b.setText("Subscribed!");
+        } else {
+            b.setText("Subscribe");
+        }
     }
 
     public void sendNotification() {

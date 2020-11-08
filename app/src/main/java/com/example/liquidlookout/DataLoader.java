@@ -1,6 +1,8 @@
 package com.example.liquidlookout;
 
 import android.os.Build;
+import android.util.Log;
+import android.util.Pair;
 
 import androidx.annotation.RequiresApi;
 
@@ -18,17 +20,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DataLoader{
 
+    public static final ZonedDateTime today = ZonedDateTime.now();
     public static final String api = "https://api.pandascore.co/";
     public static final String lolUrl = api + "lol/matches/upcoming?";
     public static final String csUrl = api + "csgo/matches/upcoming?";
-    public static final String dota2Url = api + "dota2/matches/upcoming?";
-    public static final String owUrl = api + "ow/matches/upcoming?";
     public static final String team = api + "teams/";
     public static final String token = "token=l5U9gyKracl0VKg_p-73677Gd9aOsNdduej6R0lEVPXhQu-5rbQ";
 
@@ -36,61 +39,27 @@ public class DataLoader{
 
     private static boolean loaded = false;
 
-    public static final int NUM_OF_GAMES = 4;
-
     private LOL lol;
     private CSGO csgo;
-    private Overwatch ow;
-    private Dota2 dota2;
-    private int i = 0;
 
+    private final static int NUM_OF_GAMES = 2;
+    private ExecutorService es = Executors.newFixedThreadPool(NUM_OF_GAMES);
 
-    private static ExecutorService es = Executors.newFixedThreadPool(NUM_OF_GAMES);
-
-    private boolean lolLoaded = false;
-    private boolean csLoaded = false;
-    private boolean overwatchLoaded = false;
-    private boolean dota2Loaded = false;
+    private int count = 0;
 
     private DataLoader(final DataObserver caller) {
         es.execute(new Runnable() {
             @Override
             public void run() {
                 lol = new LOL();
-                if(++i == NUM_OF_GAMES) {
-                    releaseObj(caller);
-                }
-                lolLoaded = true;
+                checkIfDone(caller);
             }
         });
         es.execute(new Runnable() {
             @Override
             public void run() {
                 csgo = new CSGO();
-                if(++i == NUM_OF_GAMES) {
-                    releaseObj(caller);
-                }
-                csLoaded = true;
-            }
-        });
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                ow = new Overwatch();
-                if(++i == NUM_OF_GAMES) {
-                    releaseObj(caller);
-                }
-                overwatchLoaded = true;
-            }
-        });
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                dota2 = new Dota2();
-                if(++i == NUM_OF_GAMES) {
-                    releaseObj(caller);
-                }
-                dota2Loaded = true;
+                checkIfDone(caller);
             }
         });
     }
@@ -100,40 +69,14 @@ public class DataLoader{
             @Override
             public void run() {
                 lol = new LOL();
-                if(lolLoaded) {
-                    releaseObj(caller);
-                }
-                lolLoaded = true;
+                checkIfDone(caller);
             }
         });
         es.execute(new Runnable() {
             @Override
             public void run() {
                 csgo = new CSGO();
-                if(csLoaded) {
-                    releaseObj(caller);
-                }
-                csLoaded = true;
-            }
-        });
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                ow = new Overwatch();
-                if(overwatchLoaded) {
-                    releaseObj(caller);
-                }
-                overwatchLoaded = true;
-            }
-        });
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                dota2 = new Dota2();
-                if(dota2Loaded) {
-                    releaseObj(caller);
-                }
-                dota2Loaded = true;
+                checkIfDone(caller);
             }
         });
         synchronized (caller) {
@@ -141,9 +84,16 @@ public class DataLoader{
         }
     }
 
+    private synchronized void checkIfDone(Object caller) {
+        if(++count == NUM_OF_GAMES) {
+            releaseObj(caller);
+        }
+    }
+
     private void releaseObj(Object caller) {
         if(caller instanceof DataObserver){
             ((DataObserver)caller).update();
+            es.shutdown();
             return;
         }
         synchronized (caller) {
@@ -194,10 +144,6 @@ public class DataLoader{
         return csgo;
     }
 
-    public Dota2 getDota2() { return dota2; }
-
-    public Overwatch getOW() { return ow; }
-
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -227,25 +173,17 @@ public class DataLoader{
         return result;
     }
 
-    public static ArrayList<Match> fetchUpcomingMatches(Games g) {
+    public static ArrayList<Match> fetchUpcomingMatches(Game g) {
         ArrayList<Match> upcoming = new ArrayList<>();
         String url = null;
 
-        if(g == Games.LOL)
+        if(g == Game.LOL)
         {
             url = getWebPageAsString(lolUrl + token);
         }
-        else if(g == Games.CSGO)
+        else if(g == Game.CSGO)
         {
             url = getWebPageAsString(csUrl + token);
-        }
-        else if(g == Games.DOTA2)
-        {
-            url = getWebPageAsString(dota2Url + token);
-        }
-        else if(g == Games.OVERWATCH)
-        {
-            url = getWebPageAsString(owUrl + token);
         }
         try {
             JSONArray jsonArr = new JSONArray(url);
