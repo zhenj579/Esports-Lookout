@@ -21,7 +21,6 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
     Context context;
     List<Match> matches;
 
-
     public MyCustomAdapter(Context context, int resource, List<Match> matches) {
         super(context,resource, matches);
         this.context = context;
@@ -37,10 +36,11 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
         subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(m.isSubscribed()) Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT).show();
+                if(m.isSubscribed())
+                    Toast.makeText(context, "Unsubscribed!", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, "Subscribed!", Toast.LENGTH_SHORT).show();
                 m.subscribe();
-                sendNotification();
             }
         });
         TextView text = (TextView) convertView.findViewById(R.id.teamMatchText);

@@ -1,5 +1,7 @@
 package com.example.liquidlookout;
 
+import android.content.Context;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
@@ -9,6 +11,7 @@ public class Match {
     private ArrayList<Team> teams;
     private ZonedDateTime begin;
     private boolean subscribed;
+    private boolean wasNotfied = false;
 
     public Match() {
 
@@ -37,10 +40,23 @@ public class Match {
     }
 
     public void subscribe() {
-        if(!subscribed) subscribed = true;
-        else subscribed = false;
+        if(!subscribed)
+        {
+            subscribed = true;
+            NotificationDispatcher.addMatch(this);
+        }
+        else {
+            subscribed = false;
+            NotificationDispatcher.removeMatch(this);
+        }
     }
 
+    public void sendNotification(Context context) {
+        if(!wasNotfied) {
+            NotificationDispatcher.sendNotification("It's time!", matchName + " is starting now!");
+            wasNotfied = true;
+        }
+    }
 
     public boolean isSubscribed() { return subscribed; }
 
