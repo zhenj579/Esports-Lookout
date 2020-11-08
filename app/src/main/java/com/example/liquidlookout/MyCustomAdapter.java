@@ -24,7 +24,6 @@ import java.util.List;
 public class MyCustomAdapter extends ArrayAdapter<Match> {
     Context context;
     List<Match> matches;
-
     public MyCustomAdapter(Context context, int resource, List<Match> matches) {
         super(context,resource, matches);
         this.context = context;
@@ -60,9 +59,8 @@ public class MyCustomAdapter extends ArrayAdapter<Match> {
 
         Bitmap logo1 = m.getTeams().get(0).getLogo();
         Bitmap logo2 = m.getTeams().get(1).getLogo();
-        Bitmap nulllogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.nulllogo);
-        if(logo1 == null) logo1 = nulllogo;
-        if(logo2 == null) logo2 = nulllogo;
+        if(logo1 == null) logo1 = LoadingActivity.nullLogo;
+        if(logo2 == null) logo2 = LoadingActivity.nullLogo;
         im1.setImageBitmap(logo1);
         im2.setImageBitmap(logo2);
 
