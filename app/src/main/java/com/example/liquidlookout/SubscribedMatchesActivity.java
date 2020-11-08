@@ -15,12 +15,8 @@ import java.util.List;
 
 public class SubscribedMatchesActivity extends AppCompatActivity {
     Button goHomeButton;
-    ImageView leagueLogo, csgoLogo, apexLogo, fortLogo, dotaLogo, smashLogo, valorantLogo;
+    ImageView leagueLogo, csgoLogo, apexLogo, fortLogo, dotaLogo, smashLogo, valorantLogo, overwatchLogo;
     ListView subMatches;
-    String testLeague[] = {"tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm", "tsm"};
-    String testCSGO[] = {"tsmcs", "tsmcs","tsmcs","tsmcs","tsmcs","tsmcs","tsmcs"};
-    String sad[] = {"Not implemented yet :("};
-    ArrayList<Match> testArray = NotificationDispatcher.getSubscribedMatches();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +31,7 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         valorantLogo = findViewById(R.id.valorantView);
         goHomeButton = findViewById(R.id.subscribedHomeButton);
         subMatches = findViewById(R.id.subListView);
+        overwatchLogo = findViewById(R.id.overwatchView);
     }
 
     public void goHome(View v)
@@ -42,10 +39,9 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
         finish();
     }
 
-    public void showMatches(List<Match> matches)
+    public void showMatches(Games g)
     {
-
-        MyCustomAdapter ad = new MyCustomAdapter(this, R.layout.upcoming_match_layout, matches);
+        MyCustomAdapter ad = new MyCustomAdapter(this, R.layout.upcoming_match_layout, NotificationDispatcher.getSubscribedMatches(g));
         subMatches.setAdapter(ad);
         subMatches.setVisibility(View.VISIBLE);
     }
@@ -53,9 +49,13 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
     public void subPageOnClick(View v)
     {
         if (v == leagueLogo)
-            showMatches(testArray);
+            showMatches(Games.LOL);
         if (v == csgoLogo)
-            showMatches(testArray);
+            showMatches(Games.CSGO);
+        if (v == dotaLogo)
+            showMatches(Games.DOTA2);
+        if (v == overwatchLogo);
+            showMatches(Games.OVERWATCH);
         //if (v == apexLogo || v == fortLogo || v == dotaLogo || v == smashLogo || v == valorantLogo)
             //showMatches(sad);
 

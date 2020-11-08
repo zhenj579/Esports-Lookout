@@ -1,5 +1,7 @@
 package com.example.liquidlookout;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
@@ -231,7 +233,7 @@ public class DataLoader{
             JSONArray jsonArr = new JSONArray(url);
             for(int i = 0; i < jsonArr.length(); i++) {
                 JSONObject obj = jsonArr.getJSONObject(i);
-                addMatch(upcoming, obj);
+                addMatch(upcoming, obj, g);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -239,8 +241,8 @@ public class DataLoader{
         return upcoming;
     }
 
-    private static void addMatch(ArrayList<Match> upcoming, JSONObject matchJson) throws JSONException {
-        Match match = new Match();
+    private static void addMatch(ArrayList<Match> upcoming, JSONObject matchJson, Games g) throws JSONException {
+        Match match = new Match(g);
         match.setMatchName(matchJson.getString("name"));
         if(DataLoader.checkForTBD(match.getMatchName()))
             return;

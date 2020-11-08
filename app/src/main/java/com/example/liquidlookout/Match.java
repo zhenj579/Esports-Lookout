@@ -11,12 +11,14 @@ public class Match {
     private ArrayList<Team> teams;
     private ZonedDateTime begin;
     private boolean subscribed;
-    private boolean wasNotfied = false;
+    private boolean wasNotified = false;
+    private Games game;
 
-    public Match() {
+    public Match(Games game) {
 
         teams = new ArrayList<>();
         subscribed = false;
+        this.game = game;
     }
 
     public String getMatchName() {
@@ -35,6 +37,8 @@ public class Match {
         return begin;
     }
 
+    public Games getGame() { return game; }
+
     public void setBegin(ZonedDateTime begin) {
         this.begin = begin;
     }
@@ -52,9 +56,9 @@ public class Match {
     }
 
     public void sendNotification(Context context) {
-        if(!wasNotfied) {
+        if(!wasNotified) {
             NotificationDispatcher.sendNotification("It's time!", matchName + " is starting now!");
-            wasNotfied = true;
+            wasNotified = true;
         }
     }
 
