@@ -30,8 +30,7 @@ public class SubscribedMatchesActivity extends AppCompatActivity {
 
     public void goHome(View v)
     {
-        Intent goHomeIntent = new Intent(this, MainActivity.class);
-        startActivity(goHomeIntent);
+        finish();
     }
 
     public void showMatches(String[] a)

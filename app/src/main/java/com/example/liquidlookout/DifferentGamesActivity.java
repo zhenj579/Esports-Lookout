@@ -13,47 +13,39 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class DifferentGamesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    Button DiffGamesHomeButton,TestAdd;
+public class DifferentGamesActivity extends AppCompatActivity  {
+    //declating buttons and list
+    Button DiffGamesHomeButton;
     ListView listOfGames;
-    String testArray[]={"a","a","a","a","a","a","a","a","a","a","a","a"};
-    int[] ListViewImages = new int[]{
-      R.drawable.leaguelogo, R.drawable.leaguelogo,R.drawable.leaguelogo,R.drawable.leaguelogo,R.drawable.leaguelogo,R.drawable.leaguelogo,
-    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //seting up the activity by geting info from the xml
         setContentView(R.layout.different_games_activity);
         DiffGamesHomeButton = findViewById(R.id.DiffGamesHomeButton);
         listOfGames = findViewById(R.id.gamesList);
 
-
+        //making two game objects league and csgo
         Games league = new Games("league", R.drawable.leaguelogo);
         Games CSGO = new Games("CS GO", R.drawable.csgologo);
+        //making a list of those games
         ArrayList<Games> gamesList = new ArrayList<>();
         gamesList.add(league);
         gamesList.add(CSGO);
 
-
+        //making adapter for the games in the list of the adapter
         GamesListAdapter gameAdapter = new GamesListAdapter(this,R.layout.diff_games_items_for_list,gamesList);
         listOfGames.setAdapter(gameAdapter);
 
 
-
-
-
     }
     public void onClicks(View v){
+        //if home is clicked return home
         if(v == DiffGamesHomeButton){
             finish();
-
-        }else if(v==TestAdd){
 
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
 }
