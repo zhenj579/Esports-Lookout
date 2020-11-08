@@ -48,6 +48,7 @@ public class NotificationDispatcher {
         return matches;
     }
 
+
     public static void addMatch(Match m) {
         subscribedMatches.add(m);
     }
